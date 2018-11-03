@@ -35,12 +35,13 @@
             android:layout_height="wrap_content"
             android:text="Email:" />
 
+
         <EditText
-            android:id="@+id/editText_emailUsuario"
+            android:id="@+id/editText_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="usuario@correo.com"
+            android:hint="Usuario@correo.com"
             android:inputType="textEmailAddress" />
 
         <TextView
@@ -49,12 +50,12 @@
             android:layout_height="wrap_content"
             android:text="Contraseña:" />
 
+
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="••••••••"
             android:inputType="textPassword" />
 
         <Button
