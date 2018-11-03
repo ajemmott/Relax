@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_equipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="50dp"
+            android:text="Nuestro equipo"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/img_arturo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"
+            app:srcCompat="@drawable/user" />
+
+        <TextView
+            android:id="@+id/tv_arturo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Arturo Jermmot" />
+
+        <ImageView
+            android:id="@+id/img_ingrdt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp"
+            app:srcCompat="@drawable/ingridtr" />
+
+        <TextView
+            android:id="@+id/tv_ingridt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Ingridt Rodríguez" />
+
+        <TextView
+            android:id="@+id/tv_equipo2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="20dp"
+            android:text="Misión"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="10dp"
+            android:text="Somos un equipo de trabajo en cuarto año de la carrera de Sistemas Computacionales, en el salón 1IL 142. Actualmente, cursando Herramientas Aplicadas IV." />
+
+        <Button
+            android:id="@+id/btn_llamada"
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:paddingTop="50dp"
+            android:text="Presione aquí para contactarnos"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textColorLink="@android:color/background_dark"
+            android:textSize="18sp" />
+
+</LinearLayout>
