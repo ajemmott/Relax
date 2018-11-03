@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "889527547265",
+    "firebase_url": "https://relax-909eb.firebaseio.com",
+    "project_id": "relax-909eb",
+    "storage_bucket": "relax-909eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889527547265:android:f58e470e5931781c",
+        "android_client_info": {
+          "package_name": "com.example.jmbwb.relax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889527547265-u1fgjko5pgsd4rmm9b9php94uaevaeq3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jmbwb.relax",
+            "certificate_hash": "ced9bb3f16160ef10ef9ae2ca61ff26666451d72"
+          }
+        },
+        {
+          "client_id": "889527547265-431nqtaseme20euak93n67uji8n6f3dq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJHtM1LGSXSjcQHH6uVfGpVH3zU569yRw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889527547265-431nqtaseme20euak93n67uji8n6f3dq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
