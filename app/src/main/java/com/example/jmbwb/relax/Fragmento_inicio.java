@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class Fragmento_inicio extends Fragment {
     View view;
     public static ArrayList <DatosTecnicas> datosTecnicas = new ArrayList<>();     //datos del recycler view
-    boolean flag = false;
 
     @Nullable
     @Override
@@ -37,7 +36,7 @@ public class Fragmento_inicio extends Fragment {
         rv_tecnicas.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //se duplican los datos asi le puse un flag para saber si ya se subieron
-        if (flag == false) {
+        if (DatosTecnicas.isFlag() == false) {
             datosTecnicas.add(new DatosTecnicas("Caminar", "9YfnG_UC5oU", "Camina. No importa si es de camino a la oficina, del supermercado al colegio de los niños, de la estación de tren a casa, o simplemente mientras andas a la orilla del mar o entre los árboles.", R.drawable.t_caminar, 0));
             datosTecnicas.add(new DatosTecnicas("Conversar", "FhMA9FKFwjc", "", R.drawable.t_conversar, 0));
             datosTecnicas.add(new DatosTecnicas("Correr", "zq0ua8CPMeo", "Al correr nuestro organismo continua experimentando beneficios una vez en reposo: se generan endorfinas que son opiáceos endógenos que provocan sensaciones placenteras y de bienestar, minimizando estados de ansiedad y aumentando la relajación.", R.drawable.t_correr, 0));
@@ -48,7 +47,7 @@ public class Fragmento_inicio extends Fragment {
             datosTecnicas.add(new DatosTecnicas("Respirar", "Df5cnoSVz-U", "La respiración profunda ayuda a activar el sistema nervioso parasimpático, induciendo a la relajación. La técnica de respiración denominada 4, 7, 8 del Dr. Weil funciona como un tranquilizante natural para el sistema nervioso.", R.drawable.t_respirar, 0));
             datosTecnicas.add(new DatosTecnicas("Tomar Té", "EnSash8H_Ac", "Existen algunas infusiones que nos ayudan a aliviar tensiones y nos pueden resultar de utilidad en estas situaciones.", R.drawable.t_tomarte, 0));
             datosTecnicas.add(new DatosTecnicas("Yoga", "1J8CRcoFekE", "El yoga ha demostrado ser particularmente beneficioso si se sufre de dolor de espalda, y también puede ser de gran beneficio para la salud mental.", R.drawable.t_yoga, 0));
-            flag=true;
+            DatosTecnicas.setFlag(true);
         }
         //creando adaptador
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(datosTecnicas);
