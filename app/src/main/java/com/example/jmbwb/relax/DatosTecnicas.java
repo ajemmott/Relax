@@ -4,6 +4,7 @@ public class DatosTecnicas {
     private String titulo, url_video, descripcion;
     private int imagen;
     private Float rating;
+    private static boolean bandera=false;
 
     public DatosTecnicas(String titulo, String url_video, String descripcion, int imagen, float rating){
         this.titulo=titulo;
@@ -54,14 +55,12 @@ public class DatosTecnicas {
         return imagen;
     }
 
-    public static Object buscarFavorito(int i){
-        DatosTecnicas favorito;
+    public static boolean isFlag() {
+        return bandera;
+    }
 
-        if (Fragmento_inicio.datosTecnicas.get(i).getRating() >= 4.5){
-            favorito = Fragmento_inicio.datosTecnicas.get(i);
-            return favorito;
-        }
-        return null;
+    public static void setFlag(boolean flag) {
+        bandera = flag;
     }
 
     public static Integer  buscarObj (String nombre){
