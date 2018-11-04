@@ -29,7 +29,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //Metodo que reemplaza los contenidos de la vista
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder viewHolder, final int i) {
-        //viewHolder.textview.setText(datosTec[i].getTitulo());
         viewHolder.textview.setText(datosTecnicas.get(i).getTitulo());
         viewHolder.imageView.setImageResource(datosTecnicas.get(i).getImagen());
 
