@@ -66,8 +66,6 @@ public class Fragmento_inicio extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextView tv_nuevas = view.findViewById(R.id.tv_nuevas);
-        RecyclerView rv_nuevas = view.findViewById(R.id.rv_nuevas);
         TextView tv_tecnicas = view.findViewById(R.id.tv_tecnicas);
         RecyclerView rv_tecnicas = view.findViewById(R.id.rv_tecnicas);
     }

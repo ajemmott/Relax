@@ -33,36 +33,36 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email:" />
+            android:text="Nombre" />
 
 
         <EditText
-            android:id="@+id/editText_email"
+            android:id="@+id/editText_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Usuario@correo.com"
-            android:inputType="textEmailAddress" />
+            android:hint="Introduzca su nombre"
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contraseña:" />
+            android:text="Edad" />
 
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/editText_edad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="number" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_empezar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Iniciar Sesión" />
+            android:text="Empezar" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
