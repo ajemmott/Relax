@@ -1,6 +1,5 @@
 package com.example.jmbwb.relax;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,17 +12,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
-    //private DatosTecnicas[] datosTec;
-    private ArrayList<String> datosTitulo;
-    private ArrayList<String> datosURL;
-    private ArrayList<String> datosdescrip;
-    private ArrayList<Integer> datosimagen;
+    private ArrayList<DatosTecnicas> datosTecnicas;
 
-    public RecyclerViewAdapter(ArrayList<String> datosTitulo, ArrayList<String> datosURL, ArrayList<String> datosdescrip, ArrayList<Integer> datosimagen){
-        this.datosTitulo = datosTitulo;
-        this.datosURL = datosURL;
-        this.datosdescrip = datosdescrip;
-        this.datosimagen = datosimagen;
+    public RecyclerViewAdapter(ArrayList<DatosTecnicas> datosTecnicas){
+        this.datosTecnicas = datosTecnicas;
     }
 
     //Creando nuevas vistas
@@ -38,8 +30,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder viewHolder, final int i) {
         //viewHolder.textview.setText(datosTec[i].getTitulo());
-        viewHolder.textview.setText(datosTitulo.get(i));
-        viewHolder.imageView.setImageResource(datosimagen.get(i));
+        viewHolder.textview.setText(datosTecnicas.get(i).getTitulo());
+        viewHolder.imageView.setImageResource(datosTecnicas.get(i).getImagen());
 
         //Para cuando se selecciona un item del recycler view
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -48,8 +40,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 //Abriendo la Actividad para ver la tecnica a detalle
                 Intent intent = new Intent(view.getContext(), MostrartecnicaActivity.class);
                 //pasando datos de la tecnica
-                intent.putExtra("url_video", datosURL.get(i));
-                intent.putExtra("descripcion", datosdescrip.get(i));
+                intent.putExtra("nombre", datosTecnicas.get(i).getTitulo());
+                intent.putExtra("url_video", datosTecnicas.get(i).getUrl_video());
+                intent.putExtra("descripcion", datosTecnicas.get(i).getDescripcion());
+
                 //iniciando actividad
                 view.getContext().startActivity(intent);
             }
@@ -58,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return datosTitulo.size();
+        return datosTecnicas.size();
     }
 
     //clase encargada de tener las referencias de cada item del RecyclerView
