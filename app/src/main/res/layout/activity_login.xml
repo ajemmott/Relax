@@ -8,11 +8,13 @@
 
     <ImageView
         android:id="@+id/imageView_fotoRelax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="93dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="128dp"
         android:layout_marginStart="128dp"
         android:layout_marginTop="72dp"
-        android:layout_marginEnd="128dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/meditation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -48,6 +50,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Introduzca su edad"
             android:text="Edad" />
 
 
@@ -56,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Introduzca su edad"
             android:inputType="number" />
 
         <Button
