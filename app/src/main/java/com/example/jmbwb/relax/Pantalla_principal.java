@@ -59,7 +59,7 @@ public class Pantalla_principal extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //para cambiarle el nombre al toolbar al cambiar de item de navegacion
         toolbar = getSupportActionBar();
-        toolbar.setTitle("Inicio"); //por default
+        toolbar.setTitle("Seleccione una Técnica"); //por default
 
         //por default cargar el fragmento de inicio
         cargarFragmento(new Fragmento_inicio());

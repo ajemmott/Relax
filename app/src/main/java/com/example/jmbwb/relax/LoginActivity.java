@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                     submitUserData.putExtra("nombreUsuario",String.valueOf(et_nombre.getText().toString()));
                     submitUserData.putExtra("edadUsuario",Integer.parseInt(String.valueOf(et_edad.getText().toString())));
                     startActivity(submitUserData);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(),"Debes introducir los campos solicitados",Toast.LENGTH_SHORT).show();
                 }
