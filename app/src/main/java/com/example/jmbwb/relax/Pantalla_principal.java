@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class Pantalla_principal extends AppCompatActivity {
@@ -59,10 +60,15 @@ public class Pantalla_principal extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //para cambiarle el nombre al toolbar al cambiar de item de navegacion
         toolbar = getSupportActionBar();
-        toolbar.setTitle("Seleccione una Técnica"); //por default
+        toolbar.setTitle("Técnicas"); //por default
 
         //por default cargar el fragmento de inicio
         cargarFragmento(new Fragmento_inicio());
+
+        Intent obtenerNombre = getIntent();
+        String nombreUser = obtenerNombre.getStringExtra("nombreUsuario");
+
+        Toast.makeText(getApplicationContext(),"Bienvenido " + nombreUser, Toast.LENGTH_LONG).show();
     }
 
     public void cargarFragmento(Fragment fragmento){

@@ -31,11 +31,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (et_edad.length() != 0 && et_nombre.length() != 0){
-                    Intent submitUserData = new Intent(getApplicationContext(),Pantalla_principal.class);
-                    submitUserData.putExtra("nombreUsuario",String.valueOf(et_nombre.getText().toString()));
-                    submitUserData.putExtra("edadUsuario",Integer.parseInt(String.valueOf(et_edad.getText().toString())));
-                    startActivity(submitUserData);
-                    finish();
+                    int edad= Integer.parseInt(et_edad.getText().toString());
+                    if (edad > 0 && edad <=110){
+                        Intent submitUserData = new Intent(getApplicationContext(),Pantalla_principal.class);
+                        submitUserData.putExtra("nombreUsuario",String.valueOf(et_nombre.getText().toString()));
+                        submitUserData.putExtra("edadUsuario",Integer.parseInt(String.valueOf(et_edad.getText().toString())));
+                        startActivity(submitUserData);
+                        finish();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Ingrese una edad válida",Toast.LENGTH_SHORT).show();
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(),"Debes introducir los campos solicitados",Toast.LENGTH_SHORT).show();
                 }
