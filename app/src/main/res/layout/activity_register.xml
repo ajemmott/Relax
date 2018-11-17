@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tv_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nombre:"
@@ -28,7 +28,7 @@
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/editText_nombre"
+            android:id="@+id/et_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -43,7 +43,7 @@
             android:textAllCaps="false" />
 
         <EditText
-            android:id="@+id/editText_edad"
+            android:id="@+id/et_edad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -57,7 +57,7 @@
             android:text="Email:" />
 
         <EditText
-            android:id="@+id/editText_correo"
+            android:id="@+id/et_correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -71,7 +71,7 @@
             android:text="Contraseña:" />
 
         <EditText
-            android:id="@+id/editText_password"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -85,20 +85,21 @@
             android:text="Género:" />
 
         <RadioGroup
+            android:id="@+id/rg_genero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radioButton_mujer"
+                android:id="@+id/rb_mujer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Mujer" />
 
             <RadioButton
-                android:id="@+id/radioButton_hombre"
+                android:id="@+id/rb_hombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,13 +109,13 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_registrar"
+        android:id="@+id/btn_registrar"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="49dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:text="Registrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
