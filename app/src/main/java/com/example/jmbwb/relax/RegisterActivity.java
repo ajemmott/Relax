@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button btn_registrar;
     EditText et_nombre, et_edad, et_correo, et_password;
     RadioButton rb_mujer, rb_hombre;
+    RadioGroup rg_genero;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -37,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_password = findViewById(R.id.et_password);
         rb_mujer = findViewById(R.id.rb_mujer);
         rb_hombre = findViewById(R.id.rb_hombre);
+        rg_genero = findViewById(R.id.rg_genero);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -46,16 +49,18 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(RegisterActivity.this, "Espere un segundo", Toast.LENGTH_LONG).show();
+                //Busco id del radioButton seleccionado en el radioGroup
+                int rb_id = rg_genero.getCheckedRadioButtonId();
+                //rb_genero es el seleccionado
+                RadioButton rb_genero = rg_genero.findViewById(rb_id);
+
+                //Guardando los campos llenados
                 final String nombre = et_nombre.getText().toString();
                 final String edad = et_edad.getText().toString();
                 final String correo = et_correo.getText().toString();
                 final String contraseña = et_password.getText().toString();
-                //final char genero;
-                if (rb_hombre.isSelected()) {
-                    final char genero = 'H';
-                } else{
-                    final char genero = 'M';
-                }
+                final String genero = rb_genero.getText().toString(); //Obteniendo texto del radioButton seleccionado
+
                 if (!TextUtils.isEmpty(correo) && !TextUtils.isEmpty(contraseña) && !TextUtils.isEmpty(nombre) && !TextUtils.isEmpty(edad)) {
                     mAuth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
