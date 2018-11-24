@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 
 
 public class LoginActivity extends AppCompatActivity {
-    NestedScrollView nestedScrollView;
+    ConstraintLayout constraintLayout;
+    private SharedPreferences preferencias;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         Button btn_empezar = findViewById(R.id.button_empezar);
         final EditText et_correo = findViewById(R.id.editText_correo);
         final EditText et_contra = findViewById(R.id.editText_contraseña);
+        constraintLayout = findViewById(R.id.constraintLayout);
 
         btn_empezar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,17 +39,21 @@ public class LoginActivity extends AppCompatActivity {
                     String contraseña = et_contra.getText().toString();
 
                     if (db.validarUsuario(correo, contraseña)){
-                        //Para guardar el id de la persona que comenzó sesión
-                        //SharedPreferences.Editor editor = (SharedPreferences.Editor) getSharedPreferences("pref", MODE_PRIVATE);
-                        //editor.putInt("id_user", db.buscarId(correo));
-                        //editor.apply();
+                        //Guardando el id del usuario
+                        preferencias = getSharedPreferences("key", MODE_PRIVATE);
+                        editor = preferencias.edit();
+                        int id = db.buscarId(correo);
+                        editor.putInt("id_user", id);
+                        editor.commit();
 
                         Intent intent = new Intent(LoginActivity.this, Pantalla_principal.class);
                         startActivity(intent);
                         finish();
+                    }else{
+                        Snackbar.make(constraintLayout,"Información errónea", Snackbar.LENGTH_LONG).show();
                     }
                 } else {
-                    Snackbar.make(nestedScrollView,"Debes introducir los campos solicitados", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(constraintLayout,"Revise los campos solicitados", Snackbar.LENGTH_LONG).show();
                 }
             }
         });

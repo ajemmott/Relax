@@ -84,11 +84,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        db.close();
     }
 
+    //Obtener datos del usuario
+    public Usuarios obtenerInfo(int idUser){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM usuarios WHERE id_usuario = " + idUser;
+
+        Cursor c = db.rawQuery(query,null);
+        Usuarios infoUsuario = new Usuarios();
+
+        if(c != null && c.moveToFirst()){
+            infoUsuario.setNombre(c.getString(c.getColumnIndex("nombre")));
+            infoUsuario.setEdad(c.getInt(c.getColumnIndex("edad")));
+            infoUsuario.setContraseña(c.getString(c.getColumnIndex("contraseña")));
+            c.close();
+        }
+
+        return infoUsuario;
+    }
+
     //Borrando Usuario
-    public void borrarUsuario(Usuarios usuario){
+    public void borrarUsuario(String correo){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("usuarios", "id_usuario = ?",
-                new String[]{String.valueOf(usuario.getId_usuario())});
+        db.delete("usuarios", "correo = ?",
+                new String[]{String.valueOf(correo)});
         db.close();
     }
 
@@ -131,7 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String seleccion = "correo = ?  AND contraseña = ?";
         String[] argumentos = {correo, contra};
 
-        Cursor cursor = db.query("usuario",
+        Cursor cursor = db.query("usuarios",
                 columna,
                 seleccion,
                 argumentos,
