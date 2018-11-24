@@ -26,11 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterActivity" ></activity>
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".Pantalla_principal"
             android:label="@string/title_activity_pantalla_principal" />
-    <activity android:name=".MostrartecnicaActivity"></activity>-->
+    <activity android:name=".MostrartecnicaActivity"></activity>
+
     </application>
 
 </manifest>

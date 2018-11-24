@@ -45,11 +45,11 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="64dp"
-        android:layout_marginEnd="64dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Comenzar"
+        android:text="Iniciar sesión"
         android:textAllCaps="true"
         android:textSize="18sp"
         android:textStyle="italic"
@@ -57,5 +57,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/tv_registrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="20dp"
+        android:text="¿No tienes cuenta? Registrate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_begin" />
 
 </android.support.constraint.ConstraintLayout>
