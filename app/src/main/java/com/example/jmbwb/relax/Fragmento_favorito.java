@@ -36,11 +36,11 @@ public class Fragmento_favorito extends Fragment {
 
         int j=0;
         for (int i=0; i < Fragmento_inicio.datosTecnicas.size(); i++){
-            Float actual = Fragmento_inicio.datosTecnicas.get(i).getRating();
-            if (actual > 3.5){
-                favoritos.add(j, Fragmento_inicio.datosTecnicas.get(i));
-                j++;
-            }
+            //Float actual = Fragmento_inicio.datosTecnicas.get(i).getRating();
+            //if (actual > 3.5){
+             //   favoritos.add(j, Fragmento_inicio.datosTecnicas.get(i));
+             //   j++;
+            //}
         }
 
         if (favoritos.isEmpty()) {
