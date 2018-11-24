@@ -18,10 +18,14 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.jmbwb.relax.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class Fragmento_inicio extends Fragment {
+    //private DatabaseReference mDatabase;
+    //private FirebaseAuth mAuth;
+    //private FirebaseAuth.AuthStateListener mAuthListener;
     View view;
     public static ArrayList <DatosTecnicas> datosTecnicas = new ArrayList<>();     //datos del recycler view
 
