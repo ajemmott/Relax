@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 public class Pantalla_principal extends AppCompatActivity {
     private ActionBar toolbar;
+    DatabaseHelper db;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -36,6 +37,13 @@ public class Pantalla_principal extends AppCompatActivity {
                     toolbar.setTitle("Favoritos");
                     //creando el fragmento de contacto
                     fragmento = new Fragmento_favorito();
+                    //cargando
+                    cargarFragmento(fragmento);
+                    return true;
+                case R.id.perfil:
+                    toolbar.setTitle("Mi perfil");
+                    //creando el fragmento de contacto
+                    fragmento = new Fragmento_perfil();
                     //cargando
                     cargarFragmento(fragmento);
                     return true;

@@ -12,8 +12,13 @@
         android:title="Favoritos" />
 
     <item
+        android:id="@+id/perfil"
+        android:icon="@drawable/user"
+        android:title="Mi perfil" />
+
+    <item
         android:id="@+id/contacto"
-        android:icon="@drawable/contacto"
+        android:icon="@drawable/telefono"
         android:title="Contactenos" />
 
 </menu>

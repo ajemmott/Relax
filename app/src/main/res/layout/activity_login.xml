@@ -35,15 +35,15 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre" />
+            android:text="Email" />
 
 
         <EditText
-            android:id="@+id/editText_name"
+            android:id="@+id/editText_correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Introduzca su nombre"
+            android:hint="usuario@correo.com"
             android:inputType="textPersonName" />
 
         <TextView
@@ -51,16 +51,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Introduzca su edad"
-            android:text="Edad" />
+            android:text="Contraseña" />
 
 
         <EditText
-            android:id="@+id/editText_edad"
+            android:id="@+id/editText_contraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Introduzca su edad"
-            android:inputType="number" />
+            android:hint="contraseña"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/button_empezar"
