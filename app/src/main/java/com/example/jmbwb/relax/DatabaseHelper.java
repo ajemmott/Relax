@@ -85,22 +85,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Obtener datos del usuario
-    public Usuarios obtenerInfo(int idUser){
+    public Cursor obtenerInfo(String correo){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT * FROM usuarios WHERE id_usuario = " + idUser;
+        Cursor mCursor = db.query("usuarios",
+                new String[] {"nombre","edad", "contraseña"},
+                "correo = ?", new String[]{correo}, null,
+                null, null);
 
-        Cursor c = db.rawQuery(query,null);
-        Usuarios infoUsuario = new Usuarios();
-
-        if(c != null && c.moveToFirst()){
-            infoUsuario.setNombre(c.getString(c.getColumnIndex("nombre")));
-            infoUsuario.setEdad(c.getInt(c.getColumnIndex("edad")));
-            infoUsuario.setContraseña(c.getString(c.getColumnIndex("contraseña")));
-            c.close();
+        if (mCursor != null) {
+            mCursor.moveToFirst();
         }
-
-        return infoUsuario;
+        return mCursor;
     }
 
     //Borrando Usuario
@@ -166,22 +162,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
         return false;
-    }
-
-    //buscar id de usuario
-    public int buscarId(String correo){
-        int id = 0;
-        String query = "SELECT id_usuario FROM usuarios WHERE correo = '" + correo + "'";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
-
-        if (c != null){
-            id = c.getInt(c.getColumnIndex("id_usuario"));
-        }
-        db.close();
-        return id;
     }
 
     //Obtener todos las tecnicas

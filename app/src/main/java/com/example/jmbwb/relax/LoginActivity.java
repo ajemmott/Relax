@@ -39,14 +39,9 @@ public class LoginActivity extends AppCompatActivity {
                     String contraseña = et_contra.getText().toString();
 
                     if (db.validarUsuario(correo, contraseña)){
-                        //Guardando el id del usuario
-                        preferencias = getSharedPreferences("key", MODE_PRIVATE);
-                        editor = preferencias.edit();
-                        int id = db.buscarId(correo);
-                        editor.putInt("id_user", id);
-                        editor.commit();
-
+                        //Pasando el correo del usuario
                         Intent intent = new Intent(LoginActivity.this, Pantalla_principal.class);
+                        intent.putExtra("correo_user",correo);
                         startActivity(intent);
                         finish();
                     }else{
