@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.jmbwb.relax.R;
@@ -16,6 +17,7 @@ import com.example.jmbwb.relax.R;
 public class Fragmento_contacto extends Fragment {
     View view;
     Button btn_llamada;
+    ImageButton btn_scan;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class Fragmento_contacto extends Fragment {
 
         // Referencia al botón
         btn_llamada = view.findViewById(R.id.btn_llamada);
+        btn_scan = view.findViewById(R.id.btn_scan);
 
         btn_llamada.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +41,15 @@ public class Fragmento_contacto extends Fragment {
                 startActivity(intent);
             }
         });
+
+        btn_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),ScanActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 }

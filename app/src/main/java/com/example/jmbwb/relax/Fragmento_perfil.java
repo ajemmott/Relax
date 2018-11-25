@@ -24,15 +24,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.google.android.gms.flags.impl.SharedPreferencesFactory.getSharedPreferences;
+//import static com.google.android.gms.flags.impl.SharedPreferencesFactory.getSharedPreferences;
 
 public class Fragmento_perfil extends Fragment{
     View view;
