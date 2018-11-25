@@ -44,6 +44,13 @@ public class Pantalla_principal extends AppCompatActivity {
                     toolbar.setTitle("Mi perfil");
                     //creando el fragmento de contacto
                     fragmento = new Fragmento_perfil();
+                    Intent obtenerNombre = getIntent();
+                    String correo = obtenerNombre.getStringExtra("correo_user");
+
+                    Bundle b = new Bundle();
+                    b.putString("correo_user", correo);
+
+                    fragmento.setArguments(b);
                     //cargando
                     cargarFragmento(fragmento);
                     return true;
@@ -74,9 +81,9 @@ public class Pantalla_principal extends AppCompatActivity {
         cargarFragmento(new Fragmento_inicio());
 
         Intent obtenerNombre = getIntent();
-        String nombreUser = obtenerNombre.getStringExtra("nombreUsuario");
+        String correo = obtenerNombre.getStringExtra("correo_user");
 
-        Toast.makeText(getApplicationContext(),"Bienvenido " + nombreUser, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"Bienvenido " + correo, Toast.LENGTH_LONG).show();
     }
 
     public void cargarFragmento(Fragment fragmento){

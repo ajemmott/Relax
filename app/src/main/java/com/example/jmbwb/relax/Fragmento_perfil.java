@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -57,18 +58,18 @@ public class Fragmento_perfil extends Fragment{
         btn_cerrar = view.findViewById(R.id.btn_cerrar);
         et_contraseña = view.findViewById(R.id.et_Npassword);
 
-        //Para traer el id de usuario de Shared preference
-        SharedPreferences preferencias = this.getContext().getSharedPreferences("pref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencias.edit();
-
-        final int idUser = preferencias.getInt("id_user", 0);
+        //Para traer el correo del usuario que viene desde Login
+        final String correo = this.getArguments().getString("correo_user");
+        Toast.makeText(getContext(),"Recibí " + correo, Toast.LENGTH_LONG).show();
 
         //traer de la base de datos y llenarlo en editText
         DatabaseHelper db = new DatabaseHelper(getContext());
-        Usuarios usuario = db.obtenerInfo(idUser);
-        et_nombre.setText(usuario.getNombre());
-        et_nedad.setText(Integer.toString(usuario.getEdad()));
-        et_contraseña.setText(usuario.getContraseña());
+        Cursor c = db.obtenerInfo(correo);
+        if (c != null){
+            et_nombre.setText(c.getString(c.getColumnIndex("nombre")));
+            et_nedad.setText(Integer.toString(c.getInt(c.getColumnIndex("edad"))));
+            et_contraseña.setText(c.getString(c.getColumnIndex("contraseña")));
+        }
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
