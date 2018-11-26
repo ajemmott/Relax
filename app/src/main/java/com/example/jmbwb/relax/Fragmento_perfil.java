@@ -17,26 +17,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.google.android.gms.flags.impl.SharedPreferencesFactory.getSharedPreferences;
+//import static com.google.android.gms.flags.impl.SharedPreferencesFactory.getSharedPreferences;
 
 public class Fragmento_perfil extends Fragment{
     View view;
     EditText et_nombre, et_nedad, et_contraseña;
     TextView tv_Borrarcuenta;
     Button btn_guardar, btn_cerrar;
+    RadioButton rb_mujer, rb_hombre;
 
     @Nullable
     @Override
@@ -57,6 +54,8 @@ public class Fragmento_perfil extends Fragment{
         btn_guardar = view.findViewById(R.id.btn_guardar);
         btn_cerrar = view.findViewById(R.id.btn_cerrar);
         et_contraseña = view.findViewById(R.id.et_Npassword);
+        rb_hombre = view.findViewById(R.id.rb_hombre);
+        rb_mujer = view.findViewById(R.id.rb_mujer);
 
         //Para traer el correo del usuario que viene desde Login
         final String correo = this.getArguments().getString("correo_user");
@@ -69,21 +68,31 @@ public class Fragmento_perfil extends Fragment{
             et_nombre.setText(c.getString(c.getColumnIndex("nombre")));
             et_nedad.setText(Integer.toString(c.getInt(c.getColumnIndex("edad"))));
             et_contraseña.setText(c.getString(c.getColumnIndex("contraseña")));
+            String genero = c.getString(c.getColumnIndex("genero"));
+            if (genero.equals(rb_mujer.getText().toString())){
+                rb_mujer.setChecked(true);
+            }else if (genero.equals(rb_hombre.getText().toString())){
+                rb_hombre.setChecked(true);
+            }
         }
+        c.close();
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String nuevoNombre = et_nombre.getText().toString();
                 String nuevaContra = et_contraseña.getText().toString();
+                String genero = "";
                 int nuevaEdad = Integer.parseInt(et_nedad.getText().toString());
+
+                DatabaseHelper db = new DatabaseHelper(getContext());
 
                 if (nuevoNombre.isEmpty()) {
                     et_nombre.setError("Introduzca un nombre");
                     et_nombre.requestFocus();
                     return;
                 }
-                if (nuevaEdad != 0  && nuevaEdad < 110) {
+                if (nuevaEdad < 0  && nuevaEdad > 110) {
                     et_nedad.setError("Introduzca una edad válida");
                     et_nedad.requestFocus();
                     return;
@@ -93,9 +102,15 @@ public class Fragmento_perfil extends Fragment{
                     et_contraseña.requestFocus();
                     return;
                 }
+                if(rb_hombre.isChecked()){
+                    genero = rb_hombre.getText().toString();
+                }else if(rb_mujer.isChecked()){
+                    genero = rb_mujer.getText().toString();
+                }
 
                 //poner lo que lo actualiza
-                //db.actualizarUsuario();
+                db.actualizarUsuario(nuevoNombre, nuevaContra, nuevaEdad, genero ,correo);
+                Toast.makeText(getContext(),"Información Actualizada", Toast.LENGTH_LONG).show();
             }
         });
 

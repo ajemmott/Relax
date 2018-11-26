@@ -70,17 +70,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Actualizar un usuario
-    public void actualizarUsuario(Usuarios usuario){
+    public void actualizarUsuario(String nuevoNombre, String nuevaContra, int nuevaEdad, String genero,String correo){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues valores = new ContentValues();
-        valores.put("nombre", usuario.getNombre());
-        valores.put("edad", usuario.getEdad());
-        valores.put("contraseña", usuario.getContraseña());
+        valores.put("nombre", nuevoNombre);
+        valores.put("contraseña", nuevaContra);
+        valores.put("edad", nuevaEdad);
+        valores.put("genero", genero);
 
         // Actualizar esa fila
-       db.update("usuarios", valores, "id_usuario = ?",
-                new String[] { String.valueOf(usuario.getId_usuario()) });
+       db.update("usuarios", valores, "correo = ?",
+                new String[] { correo });
        db.close();
     }
 
@@ -89,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor mCursor = db.query("usuarios",
-                new String[] {"nombre","edad", "contraseña"},
+                new String[] {"nombre","edad", "contraseña", "genero"},
                 "correo = ?", new String[]{correo}, null,
                 null, null);
 
