@@ -59,7 +59,7 @@ public class Fragmento_perfil extends Fragment{
 
         //Para traer el correo del usuario que viene desde Login
         final String correo = this.getArguments().getString("correo_user");
-        Toast.makeText(getContext(),"Recibí " + correo, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getContext(),"Recibí " + correo, Toast.LENGTH_LONG).show();
 
         //traer de la base de datos y llenarlo en editText
         DatabaseHelper db = new DatabaseHelper(getContext());

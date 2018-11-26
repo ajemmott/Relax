@@ -12,13 +12,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class LoginActivity extends AppCompatActivity {
     ConstraintLayout constraintLayout;
-    private SharedPreferences preferencias;
-    private SharedPreferences.Editor editor;
+    TextView tv_registrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         Button btn_empezar = findViewById(R.id.button_empezar);
         final EditText et_correo = findViewById(R.id.editText_correo);
         final EditText et_contra = findViewById(R.id.editText_contraseña);
+        TextView tv_registrar = findViewById(R.id.tv_registrar);
         constraintLayout = findViewById(R.id.constraintLayout);
 
         btn_empezar.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +51,15 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Snackbar.make(constraintLayout,"Revise los campos solicitados", Snackbar.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        tv_registrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

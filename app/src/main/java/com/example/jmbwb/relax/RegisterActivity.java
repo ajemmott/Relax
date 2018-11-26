@@ -1,23 +1,32 @@
 package com.example.jmbwb.relax;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     Button btn_registrar;
@@ -25,11 +34,14 @@ public class RegisterActivity extends AppCompatActivity {
     RadioButton rb_mujer, rb_hombre;
     RadioGroup rg_genero;
     ConstraintLayout constraintLayout;
+    NotificationManagerCompat notifMan;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        notifMan = NotificationManagerCompat.from(this); //Para las notificaciones
 
         final DatabaseHelper db = new DatabaseHelper(RegisterActivity.this);
 
@@ -42,6 +54,36 @@ public class RegisterActivity extends AppCompatActivity {
         rb_mujer = findViewById(R.id.rb_mujer);
         rb_hombre = findViewById(R.id.rb_hombre);
         rg_genero = findViewById(R.id.rg_genero);
+
+        final Date hoy = Calendar.getInstance().getTime(); //obteniendo el dia de hoy
+        final Calendar cal = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener fecha = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+                Date cumple = cal.getTime(); //el dia de nacimiento
+
+                int edad = Integer.parseInt(sdf.format(hoy)) - Integer.parseInt(sdf.format(cumple)); //calculando edad
+
+                if(!(edad > 110) && !(edad < 0)){
+                    et_edad.setText(Integer.toString(edad));
+                }else{
+                    Snackbar.make(constraintLayout, "Ingrese una fecha válida", Snackbar.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        et_edad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(RegisterActivity.this, AlertDialog.THEME_HOLO_DARK, fecha, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                     final String contraseña = et_password.getText().toString();
                     final String genero = rb_genero.getText().toString(); //Obteniendo texto del radioButton seleccionado
 
-                    if (!TextUtils.isEmpty(nombre) || !TextUtils.isEmpty(correo) || !TextUtils.isEmpty(contraseña) || !TextUtils.isEmpty(genero) || et_edad.getText().toString().length() > 0) {
+                    if (!TextUtils.isEmpty(nombre) || !TextUtils.isEmpty(correo) || !TextUtils.isEmpty(contraseña) || !TextUtils.isEmpty(genero) || et_edad.getText().toString().length() > 0 || Integer.parseInt(et_edad.getText().toString()) > 110 || Integer.parseInt(et_edad.getText().toString()) <0 ){
                         Usuarios usuario = new Usuarios();
 
                         if (!db.validarUsuario(correo)) {
@@ -71,6 +113,11 @@ public class RegisterActivity extends AppCompatActivity {
                             usuario.setTipo(0);
                             db.crearUsuario(usuario);
                             Toast.makeText(RegisterActivity.this,"Registrado con éxito", Toast.LENGTH_LONG).show();
+
+                            //Para el notification Builder
+                            mandarNotificacion();
+
+                            //Pasando a login
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
                         } else {
@@ -82,6 +129,23 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void mandarNotificacion() {
+        // Haciendo notificación
+        NotificationCompat.Builder builder = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            builder = new NotificationCompat.Builder(this, Notificacion.CANAL_1)
+                    .setSmallIcon(R.drawable.meditation)
+                    .setContentTitle("Bienvenido!!")
+                    .setContentText("Gracias por unirte a nuestra familia")
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setAutoCancel(true);
+        }
+
+        // Poner como notificacion
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, builder.build());
     }
 }
 

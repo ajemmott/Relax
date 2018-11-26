@@ -82,7 +82,7 @@ public class Pantalla_principal extends AppCompatActivity {
         Bundle b = new Bundle();
         b.putString("correo_user", correo);
         cargarFragmento(new Fragmento_inicio(),b);
-        Toast.makeText(getApplicationContext(),"Bienvenido " + correo, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Bienvenido " + correo, Toast.LENGTH_SHORT).show();
     }
 
     public void cargarFragmento(Fragment fragmento, Bundle b){

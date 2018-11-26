@@ -48,7 +48,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Ingrese su edad"
+            android:hint="Ingrese el día de cumpleaños"
+            android:clickable="true"
+            android:focusable="false"
             android:inputType="number" />
 
         <TextView
