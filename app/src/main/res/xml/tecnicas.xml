@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+   <tecnica id="0"
+       titulo="Caminar"
+       url_video="9YfnG_UC5oU"
+       descripcion="Camina. No importa si es de camino a la oficina, del supermercado al colegio de los niños, de la estación de tren a casa, o simplemente mientras andas a la orilla del mar o entre los árboles."
+       nombre_imagen="t_caminar"/>
+
+   <tecnica id="1"
+      titulo="Conversar"
+      url_video="FhMA9FKFwjc"
+      descripcion="1"
+       nombre_imagen="t_conversar"/>
+
+    <tecnica id="2"
+        titulo="Correr"
+        url_video="zq0ua8CPMeo"
+        descripcion="Al correr nuestro organismo continua experimentando beneficios una vez en reposo: se generan endorfinas que son opiáceos endógenos que provocan sensaciones placenteras y de bienestar, minimizando estados de ansiedad y aumentando la relajación."
+        nombre_imagen="t_correr"/>
+
+    <tecnica id="3"
+        titulo="Escuchar música"
+        url_video="4FvuEaByqLE"
+        descripcion="La música es una herramienta muy poderosa ya que tiene el poder de transmitir emociones, y está comprobado que la música que escuchamos afecta al ser humano de  diferentes formas y llega a modificar el estado de ánimo. "
+        nombre_imagen="t_escucharmusica"/>
+
+
+</PreferenceScreen>

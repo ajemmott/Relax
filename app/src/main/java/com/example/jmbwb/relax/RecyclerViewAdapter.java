@@ -13,9 +13,11 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private ArrayList<DatosTecnicas> datosTecnicas;
+    private String correo;
 
-    public RecyclerViewAdapter(ArrayList<DatosTecnicas> datosTecnicas){
+    public RecyclerViewAdapter(ArrayList<DatosTecnicas> datosTecnicas, String correo){
         this.datosTecnicas = datosTecnicas;
+        this.correo = correo;
     }
 
     //Creando nuevas vistas
@@ -39,9 +41,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 //Abriendo la Actividad para ver la tecnica a detalle
                 Intent intent = new Intent(view.getContext(), MostrartecnicaActivity.class);
                 //pasando datos de la tecnica
+                intent.putExtra("id_tecnica",datosTecnicas.get(i).getid_tecnica());
                 intent.putExtra("nombre", datosTecnicas.get(i).getTitulo());
                 intent.putExtra("url_video", datosTecnicas.get(i).getUrl_video());
                 intent.putExtra("descripcion", datosTecnicas.get(i).getDescripcion());
+                intent.putExtra("correo", correo);
 
                 //iniciando actividad
                 view.getContext().startActivity(intent);

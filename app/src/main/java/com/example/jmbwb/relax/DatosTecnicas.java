@@ -2,16 +2,16 @@ package com.example.jmbwb.relax;
 
 public class DatosTecnicas {
     private String titulo, url_video, descripcion;
-    private int imagen;
+    private int imagen, id;
     private Float rating;
-    private static boolean bandera=false;
+    private static boolean bandera  =false;
 
-    public DatosTecnicas(String titulo, String url_video, String descripcion, int imagen, float rating){
+    public DatosTecnicas( int id, String titulo, String url_video, String descripcion, int imagen){
         this.titulo=titulo;
+        this.id = id;
         this.imagen=imagen;
         this.descripcion=descripcion;
         this.url_video=url_video;
-        this.rating=rating;
     }
 
     public void setTitulo(String titulo) {
@@ -21,6 +21,15 @@ public class DatosTecnicas {
 
     public void setImagen(int imagen) {
         this.imagen = imagen;
+    }
+
+    public void setId_tecnica(int id) {
+
+        this.id = id;
+    }
+
+    public int getid_tecnica() {
+        return id;
     }
 
     public String getUrl_video() {
@@ -39,14 +48,6 @@ public class DatosTecnicas {
         this.descripcion = descripcion;
     }
 
-    public Float getRating() {
-        return rating;
-    }
-
-    public void setRating(Float rating) {
-        this.rating = rating;
-    }
-
     public String getTitulo() {
         return titulo;
     }
@@ -63,7 +64,7 @@ public class DatosTecnicas {
         bandera = flag;
     }
 
-    public static Integer  buscarObj (String nombre){
+    public static Integer  buscarObj(String nombre){
         int i;
 
         for (i=0; i < Fragmento_inicio.datosTecnicas.size(); i++){

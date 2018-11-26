@@ -2,6 +2,7 @@ package com.example.jmbwb.relax;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -69,6 +70,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public void almacenarTecnicas(DatosTecnicas datosTecnicas){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("id_tecnicas",datosTecnicas.getid_tecnica());
+        valores.put("titulo",datosTecnicas.getTitulo());
+        valores.put("url_video",datosTecnicas.getUrl_video());
+        valores.put("descripcion",datosTecnicas.getDescripcion());
+        valores.put("imagen",datosTecnicas.getImagen());
+
+        db.insert("tecnicas",null,valores);
+        db.close();
+    }
+
+    public float actualizarHistorial(String correo, int id_tecnica){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] columnas = {"id_usuario"};
+        String busqueda = "correo = ?";
+        String[] argumento = {correo};
+
+        Cursor c = db.query("usuarios",
+                columnas,
+                busqueda,
+                argumento,
+                null,
+                null,
+                null);
+
+        if (c != null){
+            c.moveToFirst();
+        }
+
+        int id_usuario = c.getInt(c.getColumnIndex("id_usuario"));
+        c.close();
+        db.close();
+
+        if (!validarHistorial(id_usuario, id_tecnica)){
+            db = this.getWritableDatabase();
+            ContentValues valores = new ContentValues();
+            valores.put("id_usuario",id_usuario);
+            valores.put("id_tecnicas",id_tecnica);
+            valores.put("nVeces",1);
+            int veces = 1;
+            db.insert("usuario_observa_tecnicas", null, valores);
+            db.close();
+            return (float) veces;
+        }else{
+            db = this.getReadableDatabase();
+            columnas = new String[] {"nVeces"};
+            busqueda = "id_usuario = ? AND id_tecnicas = ?";
+            argumento = new String[] {String.valueOf(id_usuario),String.valueOf(id_tecnica)};
+
+            c = db.query("usuario_observa_tecnicas",
+                    columnas,
+                    busqueda,
+                    argumento,
+                    null, null, null);
+
+            if(c != null){
+                c.moveToFirst();
+            }
+            int veces = Integer.parseInt(c.getString(c.getColumnIndex("nVeces")));
+            c.close();
+            db.close();
+            veces += 1;
+
+            db = this.getWritableDatabase();
+            ContentValues valores = new ContentValues();
+
+            valores.put("nVeces", String.valueOf(veces));
+            db.update("usuario_observa_tecnicas", valores,
+                    "id_usuario = ? AND id_tecnicas = ?",
+                    new String[] {String.valueOf(id_usuario), String.valueOf(id_tecnica)});
+            db.close();
+            return (float) veces;
+        }
+    }
+
+    public boolean validarHistorial(int id_usuario, int id_tecnica) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] columnas = {"id_tecnicas", "id_usuario"};
+        String busqueda = "id_tecnicas = ? AND id_usuario = ?";
+        String[] argumento = {String.valueOf(id_tecnica), String.valueOf(id_usuario)};
+
+        Cursor cursor = db.query("usuario_observa_tecnicas",
+                columnas,
+                busqueda,
+                argumento,
+                null,
+                null,
+                null);
+        int cursorConteo = cursor.getCount();
+        cursor.close();
+        db.close();
+        return (cursorConteo > 0);
+    }
+
+
     //Actualizar un usuario
     public void actualizarUsuario(String nuevoNombre, String nuevaContra, int nuevaEdad, String genero,String correo){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -106,6 +208,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete("usuarios", "correo = ?",
                 new String[]{String.valueOf(correo)});
         db.close();
+    }
+    public boolean validarTecnica(int id) {
+        String[] columnas = {"id_tecnicas"};
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String busqueda = "id_tecnicas = ?";
+        String[] argumento = {String.valueOf(id)};
+
+        Cursor cursor = db.query("tecnicas",
+                columnas,
+                busqueda,
+                argumento,
+                null,
+                null,
+                null);
+        int cursorConteo = cursor.getCount();
+        cursor.close();
+        db.close();
+        return (cursorConteo > 0);
     }
 
     //Chequeando si existe
@@ -166,49 +288,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Obtener todos las tecnicas
-    public List<DatosTecnicas> getTecnicas(){
-        List<DatosTecnicas> tecnicas = new ArrayList<DatosTecnicas>();
-        String query = "SELECT * FROM tecnicas";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(query, null);
-
-        //Loops de todas las filas para agregarlo a la lista
-        if (c.moveToFirst()){
-            do{
-                DatosTecnicas datosTecnicas = new DatosTecnicas();
-                datosTecnicas.setId_tecnica(c.getInt(c.getColumnIndex("id_tecnicas")));
-                datosTecnicas.setTitulo(c.getString(c.getColumnIndex("titulo")));
-                datosTecnicas.setUrl_video(c.getString(c.getColumnIndex("url_video")));
-                datosTecnicas.setDescripcion(c.getString(c.getColumnIndex("descripcion")));
-                datosTecnicas.setImagen(c.getInt(c.getColumnIndex("imagen")));
-            }while(c.moveToNext());
-        }
-        return tecnicas;
-    }
+    //public List<DatosTecnicas> getTecnicas(){
+    //    List<DatosTecnicas> tecnicas = new ArrayList<DatosTecnicas>();
+    //    String query = "SELECT * FROM tecnicas";
+    //
+    //    SQLiteDatabase db = this.getReadableDatabase();
+    //    Cursor c = db.rawQuery(query, null);
+    //
+    //    //Loops de todas las filas para agregarlo a la lista
+    //    if (c.moveToFirst()){
+    //        do{
+    //            DatosTecnicas datosTecnicas = new DatosTecnicas();
+    //            datosTecnicas.setId_tecnica(c.getInt(c.getColumnIndex("id_tecnicas")));
+    //            datosTecnicas.setTitulo(c.getString(c.getColumnIndex("titulo")));
+    //            datosTecnicas.setUrl_video(c.getString(c.getColumnIndex("url_video")));
+    //            datosTecnicas.setDescripcion(c.getString(c.getColumnIndex("descripcion")));
+    //            datosTecnicas.setImagen(c.getInt(c.getColumnIndex("imagen")));
+    //        }while(c.moveToNext());
+    //    }
+    //    return tecnicas;
+    //}
 
     //Obtener tecnicas mas vistas del usuario
-    public List<DatosTecnicas> getTecnicasMasVistas(Integer usuarioActual) {
-        List<DatosTecnicas> tecnicas = new ArrayList<DatosTecnicas>();
-
-        String query = "SELECT * FROM tecnicas tec, usuarios us,"
-                + "usuario_observa_tecnicas uot WHERE uot.nVeces > 4"
-                + "AND us.id_usuario = " + usuarioActual;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(query, null);
-
-        //Loops de todas las filas para agregarlo a la lista
-        if (c.moveToFirst()) {
-            do {
-                DatosTecnicas datosTecnicas = new DatosTecnicas();
-                datosTecnicas.setId_tecnica(c.getInt(c.getColumnIndex("id_tecnicas")));
-                datosTecnicas.setTitulo(c.getString(c.getColumnIndex("titulo")));
-                datosTecnicas.setUrl_video(c.getString(c.getColumnIndex("url_video")));
-                datosTecnicas.setDescripcion(c.getString(c.getColumnIndex("descripcion")));
-                datosTecnicas.setImagen(c.getInt(c.getColumnIndex("imagen")));
-            } while (c.moveToNext());
-        }
-        return tecnicas;
-    }
+    //public List<DatosTecnicas> getTecnicasMasVistas(Integer usuarioActual) {
+    //    List<DatosTecnicas> tecnicas = new ArrayList<DatosTecnicas>();
+    //
+    //    String query = "SELECT * FROM tecnicas tec, usuarios us,"
+    //            + "usuario_observa_tecnicas uot WHERE uot.nVeces > 4"
+    //            + "AND us.id_usuario = " + usuarioActual;
+    //
+    //    SQLiteDatabase db = this.getReadableDatabase();
+    //    Cursor c = db.rawQuery(query, null);
+    //
+    //    //Loops de todas las filas para agregarlo a la lista
+    //    if (c.moveToFirst()) {
+    //        do {
+    //            DatosTecnicas datosTecnicas = new DatosTecnicas();
+    //            datosTecnicas.setId_tecnica(c.getInt(c.getColumnIndex("id_tecnicas")));
+    //            datosTecnicas.setTitulo(c.getString(c.getColumnIndex("titulo")));
+    //            datosTecnicas.setUrl_video(c.getString(c.getColumnIndex("url_video")));
+    //            datosTecnicas.setDescripcion(c.getString(c.getColumnIndex("descripcion")));
+    //            datosTecnicas.setImagen(c.getInt(c.getColumnIndex("imagen")));
+    //        } while (c.moveToNext());
+    //    }
+    //    return tecnicas;
+    //}
 }

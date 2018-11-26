@@ -53,7 +53,7 @@ public class Fragmento_favorito extends Fragment {
         }
 
         //creando adaptador
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(favoritos);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(favoritos, "");
         //asignandolo
         rv_favoritos.setAdapter(adapter);
         //animador

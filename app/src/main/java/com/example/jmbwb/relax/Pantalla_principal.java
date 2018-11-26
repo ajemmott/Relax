@@ -24,6 +24,10 @@ public class Pantalla_principal extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             //dependiendo de donde se selecciona, se abre un fragmento diferente
             Fragment fragmento;
+            Intent obtenerNombre = getIntent();
+            String correo = obtenerNombre.getStringExtra("correo_user");
+            Bundle b = new Bundle();
+            b.putString("correo_user", correo);
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
@@ -31,35 +35,29 @@ public class Pantalla_principal extends AppCompatActivity {
                     //creando el fragmento de contacto
                     fragmento = new Fragmento_inicio();
                     //cargando
-                    cargarFragmento(fragmento);
+                    cargarFragmento(fragmento, b);
                     return true;
                 case R.id.favoritos:
                     toolbar.setTitle("Favoritos");
                     //creando el fragmento de contacto
                     fragmento = new Fragmento_favorito();
                     //cargando
-                    cargarFragmento(fragmento);
+                    cargarFragmento(fragmento, b);
                     return true;
                 case R.id.perfil:
                     toolbar.setTitle("Mi perfil");
-                    //creando el fragmento de contacto
+                    //creando el fragmento de perfil de usuario
                     fragmento = new Fragmento_perfil();
-                    Intent obtenerNombre = getIntent();
-                    String correo = obtenerNombre.getStringExtra("correo_user");
 
-                    Bundle b = new Bundle();
-                    b.putString("correo_user", correo);
-
-                    fragmento.setArguments(b);
                     //cargando
-                    cargarFragmento(fragmento);
+                    cargarFragmento(fragmento, b);
                     return true;
                 case R.id.contacto:
                     toolbar.setTitle("Contactenos");
                     //creando el fragmento de contacto
                     fragmento = new Fragmento_contacto();
                     //cargando
-                    cargarFragmento(fragmento);
+                    cargarFragmento(fragmento, b);
                     return true;
             }
             return false;
@@ -78,15 +76,17 @@ public class Pantalla_principal extends AppCompatActivity {
         toolbar.setTitle("Técnicas"); //por default
 
         //por default cargar el fragmento de inicio
-        cargarFragmento(new Fragmento_inicio());
 
         Intent obtenerNombre = getIntent();
         String correo = obtenerNombre.getStringExtra("correo_user");
-
-        Toast.makeText(getApplicationContext(),"Bienvenido " + correo, Toast.LENGTH_LONG).show();
+        Bundle b = new Bundle();
+        b.putString("correo_user", correo);
+        cargarFragmento(new Fragmento_inicio(),b);
+        Toast.makeText(getApplicationContext(),"Bienvenido " + correo, Toast.LENGTH_SHORT).show();
     }
 
-    public void cargarFragmento(Fragment fragmento){
+    public void cargarFragmento(Fragment fragmento, Bundle b){
+        fragmento.setArguments(b);
         FragmentTransaction transaccion = getSupportFragmentManager().beginTransaction();
         transaccion.replace(R.id.fragmentHolder, fragmento);
         transaccion.addToBackStack(null);
