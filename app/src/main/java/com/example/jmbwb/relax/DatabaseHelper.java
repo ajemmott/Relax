@@ -23,13 +23,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Tabla tecnicas
     private static final String CREAR_TABLA_TECNICAS = "CREATE TABLE "
-            + "tecnicas (id_tecnicas INTEGER PRIMARY KEY, titulo TEXT, "
-            + " url_video TEXT, descripcion TEXT, imagen INTEGER)";
+            + "tecnicas (id_tecnicas INTEGER PRIMARY KEY," +
+            " titulo TEXT, "
+            + " url_video TEXT, " +
+            "descripcion TEXT, " +
+            "imagen INTEGER)";
 
     //Tabla usuarios_observa_tecnicas
     private static final String CREAR_TABLA_USUARIO_OBSERVA_TECNICAS = "CREATE TABLE "
-            + "usuario_observa_tecnicas (id INTEGER PRIMARY KEY, id_usuario INTEGER, "
-            + "id_tecnicas INTEGER, nVeces INTEGER)";
+            + "usuario_observa_tecnicas (id INTEGER PRIMARY KEY,"
+            + " id_usuario INTEGER, "
+            + "id_tecnicas INTEGER, "
+            + "nVeces INTEGER)";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -131,7 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     null, null, null);
 
             if(c != null){
-                c.moveToFirst();
+                c.moveToNext();
             }
             int veces = Integer.parseInt(c.getString(c.getColumnIndex("nVeces")));
             c.close();
@@ -257,6 +262,105 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<DatosTecnicas> obtenerFavoritos(String correo){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columnas = {"id_usuario"};
+        String busqueda = "correo = ?";
+        String[] argumentos = {correo};
+
+        Cursor c = db.query("usuarios",
+                columnas,
+                busqueda,
+                argumentos,
+                null,
+                null,
+                null);
+
+        if (c != null){
+            c.moveToFirst();
+        }
+
+        String id_usuario = c.getString(c.getColumnIndex("id_usuario"));
+
+        //Se crea la lista a retornar como resultado de la consulta
+        ArrayList<DatosTecnicas> tecnicasFavoritas = new ArrayList<>();
+
+        //Se obtiene el id_tenica de las entradas en el historial con mas de 3 vistas
+        columnas = new String[] {"id_tecnicas"};
+        busqueda = "nVeces > ? AND id_usuario = ?";
+        argumentos = new String[] {"3",id_usuario};
+
+        c = db.query("usuario_observa_tecnicas",
+                columnas,
+                busqueda,
+                argumentos,
+                null, null, null);
+
+        //con los id_tecnica obtenido se formulas las tecnicas a mostrar
+        if (c != null){
+            c.moveToFirst();
+            Cursor cc;
+            do {
+                columnas = new String[]{"id_tecnicas", "titulo", "url_video", "descripcion", "imagen"};
+                busqueda = "id_tecnicas = ?";
+                argumentos = new String[]{c.getString(c.getColumnIndex("id_tecnicas"))};
+                db = this.getReadableDatabase();
+
+                cc = db.query("tecnicas",
+                        columnas,
+                        busqueda,
+                        argumentos,
+                        null,null,null);
+
+                if (cc != null){
+                    cc.moveToFirst();
+                }
+
+                int id = Integer.parseInt(cc.getString(cc.getColumnIndex("id_tecnicas")));
+                String titulo = cc.getString(cc.getColumnIndex("titulo"));
+                String url_video = cc.getString(cc.getColumnIndex("url_video"));
+                String descripcion = cc.getString(cc.getColumnIndex("descripcion"));
+                int imagen = Integer.parseInt(cc.getString(cc.getColumnIndex("imagen")));
+
+                DatosTecnicas dt = new DatosTecnicas(id, titulo, url_video, descripcion, imagen);
+                tecnicasFavoritas.add(dt);
+            }while(c.moveToNext());
+            cc.close();
+            c.close();
+        } else return new ArrayList<>();
+        return tecnicasFavoritas;
+    }
+
+    public void limpiarHistorial(String correo){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] columnas = {"id_usuario"};
+        String busqueda = "correo = ?";
+        String[] argumento = {correo};
+
+        Cursor c = db.query("usuarios",
+                columnas,
+                busqueda,
+                argumento,
+                null,
+                null,
+                null);
+
+        if (c != null){
+            c.moveToFirst();
+        }
+
+        int id_usuario = c.getInt(c.getColumnIndex("id_usuario"));
+
+        db = this.getWritableDatabase();
+        busqueda = "id_usuario = ?";
+        argumento = new String[] {String.valueOf(id_usuario)};
+        db.delete("usuario_observa_tecnicas", busqueda,argumento);
+
+        actualizarHistorial(correo, 0);
     }
 
     //Validando al usuario

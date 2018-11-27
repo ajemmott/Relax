@@ -63,7 +63,7 @@ public class Fragmento_inicio extends Fragment {
                             && xrp.getName().equalsIgnoreCase("tecnica")) {
 
                         //...almacena los atributos xml en variables...
-                        int id = xrp.getAttributeIntValue(null, "order", 0);
+                        int id = Integer.parseInt(xrp.getAttributeValue(null,"id"));
                         String titulo = xrp.getAttributeValue(null, "titulo");
                         String url_video = xrp.getAttributeValue(null, "url_video");
                         String descripcion = xrp.getAttributeValue(null, "descripcion");
@@ -101,9 +101,9 @@ public class Fragmento_inicio extends Fragment {
                 try {
                     if (!db.validarTecnica(tecnica.getid_tecnica())) {
                         db.almacenarTecnicas(tecnica);
-                        Toast.makeText(getContext(), "Almacenando tecnica..." + tecnica.getTitulo().toString(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getContext(), "Almacenando tecnica..." + tecnica.getTitulo().toString(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getContext(), tecnica.getTitulo() + "ya fue almacenada...", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), tecnica.getTitulo() + " ya fue almacenada...", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show();

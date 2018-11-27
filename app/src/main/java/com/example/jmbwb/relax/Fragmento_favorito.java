@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class Fragmento_favorito extends Fragment {
     View view;
     public ArrayList<DatosTecnicas> favoritos = new ArrayList<>();     //Lista de favoritos
+    TextView tv_borrarHistorial;
     TextView tv_vacio;
 
     @Nullable
@@ -34,14 +35,17 @@ public class Fragmento_favorito extends Fragment {
         //El layout manager
         rv_favoritos.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        int j=0;
-        for (int i=0; i < Fragmento_inicio.datosTecnicas.size(); i++){
+        //int j=0;
+        //for (int i=0; i < Fragmento_inicio.datosTecnicas.size(); i++){
             //Float actual = Fragmento_inicio.datosTecnicas.get(i).getRating();
             //if (actual > 3.5){
              //   favoritos.add(j, Fragmento_inicio.datosTecnicas.get(i));
              //   j++;
             //}
-        }
+        //}
+        String correo = this.getArguments().getString("correo_user");
+        DatabaseHelper db = new DatabaseHelper(getContext());
+        favoritos = db.obtenerFavoritos(correo);
 
         if (favoritos.isEmpty()) {
             rv_favoritos.setVisibility(View.GONE);
@@ -53,7 +57,7 @@ public class Fragmento_favorito extends Fragment {
         }
 
         //creando adaptador
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(favoritos, "");
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(favoritos,correo);
         //asignandolo
         rv_favoritos.setAdapter(adapter);
         //animador

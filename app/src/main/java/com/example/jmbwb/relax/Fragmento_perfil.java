@@ -31,7 +31,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Fragmento_perfil extends Fragment{
     View view;
     EditText et_nombre, et_nedad, et_contraseña;
-    TextView tv_Borrarcuenta;
+    TextView tv_Borrarcuenta, tv_borrarHistorial;
     Button btn_guardar, btn_cerrar;
     RadioButton rb_mujer, rb_hombre;
 
@@ -51,6 +51,7 @@ public class Fragmento_perfil extends Fragment{
         et_nombre = view.findViewById(R.id.et_Nnombre);
         et_nedad = view.findViewById(R.id.et_Nedad);
         tv_Borrarcuenta = view.findViewById(R.id.tv_Borrarcuenta);
+        tv_borrarHistorial = view.findViewById(R.id.textView_borrarHistorial);
         btn_guardar = view.findViewById(R.id.btn_guardar);
         btn_cerrar = view.findViewById(R.id.btn_cerrar);
         et_contraseña = view.findViewById(R.id.et_Npassword);
@@ -122,7 +123,31 @@ public class Fragmento_perfil extends Fragment{
                 startActivity(intent);
             }
         });
+        tv_borrarHistorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
+                builder.setTitle("Eliminando historial");
+                builder.setMessage("¿Está seguro que desea borrar su historial?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Eliminar historial", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper db = new DatabaseHelper(getContext());
+                        db.limpiarHistorial(correo);
+                    }
+                });
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialogo = builder.create();
+                dialogo.show();
+            }
+        });
         tv_Borrarcuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

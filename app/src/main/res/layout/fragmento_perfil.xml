@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -119,11 +120,26 @@
         android:id="@+id/tv_Borrarcuenta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:focusableInTouchMode="false"
         android:layout_marginTop="20dp"
+        android:focusableInTouchMode="false"
         android:text="Deseo eliminar mi cuenta"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_cerrar" />
+
+    <TextView
+        android:id="@+id/textView_borrarHistorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="111dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="110dp"
+        android:clickable="true"
+        android:text="Deseo eliminar mi historial"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Borrarcuenta" />
 
 </android.support.constraint.ConstraintLayout>
