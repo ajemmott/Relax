@@ -3,6 +3,7 @@ package com.example.jmbwb.relax;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -264,7 +265,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public ArrayList<DatosTecnicas> obtenerFavoritos(String correo){
+    public ArrayList<DatosTecnicas> obtenerFavoritos(String correo) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnas = {"id_usuario"};
@@ -279,19 +280,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,
                 null);
 
-        if (c != null){
+        String id_usuario = new String();
+        if (c != null) {
             c.moveToFirst();
+            id_usuario = c.getString(c.getColumnIndex("id_usuario"));
         }
-
-        String id_usuario = c.getString(c.getColumnIndex("id_usuario"));
 
         //Se crea la lista a retornar como resultado de la consulta
         ArrayList<DatosTecnicas> tecnicasFavoritas = new ArrayList<>();
 
         //Se obtiene el id_tenica de las entradas en el historial con mas de 3 vistas
-        columnas = new String[] {"id_tecnicas"};
+        columnas = new String[]{"id_tecnicas"};
         busqueda = "nVeces > ? AND id_usuario = ?";
-        argumentos = new String[] {"3",id_usuario};
+        argumentos = new String[]{"3", id_usuario};
 
         c = db.query("usuario_observa_tecnicas",
                 columnas,
@@ -300,22 +301,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null, null, null);
 
         //con los id_tecnica obtenido se formulas las tecnicas a mostrar
-        if (c != null){
+        if (c.getCount() > 0) {
             c.moveToFirst();
+
             Cursor cc;
+            String id_tecnica = c.getString(c.getColumnIndex("id_tecnicas"));
             do {
                 columnas = new String[]{"id_tecnicas", "titulo", "url_video", "descripcion", "imagen"};
                 busqueda = "id_tecnicas = ?";
-                argumentos = new String[]{c.getString(c.getColumnIndex("id_tecnicas"))};
+                argumentos = new String[]{id_tecnica};
                 db = this.getReadableDatabase();
 
                 cc = db.query("tecnicas",
                         columnas,
                         busqueda,
                         argumentos,
-                        null,null,null);
+                        null, null, null);
 
-                if (cc != null){
+                if (cc != null) {
                     cc.moveToFirst();
                 }
 
@@ -327,12 +330,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 DatosTecnicas dt = new DatosTecnicas(id, titulo, url_video, descripcion, imagen);
                 tecnicasFavoritas.add(dt);
-            }while(c.moveToNext());
+            } while (c.moveToNext());
             cc.close();
             c.close();
-        } else return new ArrayList<>();
-        return tecnicasFavoritas;
+            return tecnicasFavoritas;
+        }else return new ArrayList<>();
     }
+
 
     public void limpiarHistorial(String correo){
         SQLiteDatabase db = this.getReadableDatabase();
