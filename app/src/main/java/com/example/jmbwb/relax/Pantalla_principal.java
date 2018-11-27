@@ -76,13 +76,11 @@ public class Pantalla_principal extends AppCompatActivity {
         toolbar.setTitle("Técnicas"); //por default
 
         //por default cargar el fragmento de inicio
-
         Intent obtenerNombre = getIntent();
         String correo = obtenerNombre.getStringExtra("correo_user");
         Bundle b = new Bundle();
         b.putString("correo_user", correo);
         cargarFragmento(new Fragmento_inicio(),b);
-        //Toast.makeText(getApplicationContext(),"Bienvenido " + correo, Toast.LENGTH_SHORT).show();
     }
 
     public void cargarFragmento(Fragment fragmento, Bundle b){

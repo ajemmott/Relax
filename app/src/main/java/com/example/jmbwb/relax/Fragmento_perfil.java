@@ -81,12 +81,12 @@ public class Fragmento_perfil extends Fragment{
         btn_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nuevoNombre = et_nombre.getText().toString();
-                String nuevaContra = et_contraseña.getText().toString();
+                final String nuevoNombre = et_nombre.getText().toString();
+                final String nuevaContra = et_contraseña.getText().toString();
                 String genero = "";
-                int nuevaEdad = Integer.parseInt(et_nedad.getText().toString());
+                final int nuevaEdad = Integer.parseInt(et_nedad.getText().toString());
 
-                DatabaseHelper db = new DatabaseHelper(getContext());
+                final DatabaseHelper db = new DatabaseHelper(getContext());
 
                 if (nuevoNombre.isEmpty()) {
                     et_nombre.setError("Introduzca un nombre");
@@ -109,9 +109,29 @@ public class Fragmento_perfil extends Fragment{
                     genero = rb_mujer.getText().toString();
                 }
 
-                //poner lo que lo actualiza
-                db.actualizarUsuario(nuevoNombre, nuevaContra, nuevaEdad, genero ,correo);
-                Toast.makeText(getContext(),"Información Actualizada", Toast.LENGTH_LONG).show();
+                //Preguntar si está seguro
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle(nuevoNombre);
+                builder.setMessage("¿Estás seguro de los cambios?");
+                builder.setCancelable(true);
+                final String finalGenero = genero;
+                builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //poner lo que lo actualiza
+                        db.actualizarUsuario(nuevoNombre, nuevaContra, nuevaEdad, finalGenero,correo);
+                        Toast.makeText(getContext(),"Información Actualizada", Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialogo = builder.create();
+                dialogo.show();
             }
         });
 

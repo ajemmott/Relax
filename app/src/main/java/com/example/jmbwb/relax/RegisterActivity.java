@@ -7,6 +7,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -102,24 +103,41 @@ public class RegisterActivity extends AppCompatActivity {
                     final String genero = rb_genero.getText().toString(); //Obteniendo texto del radioButton seleccionado
 
                     if (!TextUtils.isEmpty(nombre) || !TextUtils.isEmpty(correo) || !TextUtils.isEmpty(contraseña) || !TextUtils.isEmpty(genero) || et_edad.getText().toString().length() > 0 || Integer.parseInt(et_edad.getText().toString()) > 110 || Integer.parseInt(et_edad.getText().toString()) <0 ){
-                        Usuarios usuario = new Usuarios();
-
                         if (!db.validarUsuario(correo)) {
-                            usuario.setNombre(nombre);
-                            usuario.setContraseña(contraseña);
-                            usuario.setCorreo(correo);
-                            usuario.setEdad(edad);
-                            usuario.setGenero(genero);
-                            usuario.setTipo(0);
-                            db.crearUsuario(usuario);
-                            Toast.makeText(RegisterActivity.this,"Registrado con éxito", Toast.LENGTH_LONG).show();
+                            //Preguntar si está seguro
+                            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
 
-                            //Para el notification Builder
-                            mandarNotificacion();
+                            builder.setTitle("Revisemos tus datos primero.");
+                            builder.setMessage("Nombre: "+ nombre + "\nCorreo: " + correo + "\nEdad: " + edad + "\nGénero: "+ genero);
+                            builder.setCancelable(true);
+                            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Usuarios usuario = new Usuarios();
+                                    usuario.setNombre(nombre);
+                                    usuario.setContraseña(contraseña);
+                                    usuario.setCorreo(correo);
+                                    usuario.setEdad(edad);
+                                    usuario.setGenero(genero);
+                                    usuario.setTipo(0);
+                                    db.crearUsuario(usuario);
 
-                            //Pasando a login
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
+                                    //Para el notification Builder
+                                    mandarNotificacion();
+
+                                    //Pasando a login
+                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            AlertDialog dialogo = builder.create();
+                            dialogo.show();
                         } else {
                             Snackbar.make(constraintLayout, "Su correo ya está registrado", Snackbar.LENGTH_SHORT).show();
                         }
